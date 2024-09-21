@@ -1,0 +1,31 @@
+{
+  "folders": [
+    {
+      "name": "moxfield-tools",
+      "path": ".",
+    },
+  ],
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "Orta.vscode-jest",
+      "unifiedjs.vscode-mdx",
+    ],
+  },
+  "settings": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "editor.fixAll": "explicit",
+    },
+    "eslint.workingDirectories": ["."],
+    "files.exclude": {
+      "node_modules": true,
+    },
+    "jest.disabledWorkspaceFolders": [""],
+    "typescript.preferences.importModuleSpecifier": "shortest",
+    "typescript.tsdk": ".",
+    "mdx.experimentalLanguageServer": true,
+  },
+}

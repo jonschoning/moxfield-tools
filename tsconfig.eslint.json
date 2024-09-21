@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "incremental": true },
+  "include": [
+    "src/*",
+    "src/**/*",
+    "test/*",
+    "test/**/*",
+    ".storybook/**/*",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "rollup.config.mjs",
+    "README.md",
+    "CHANGELOG.md"
+  ]
+}
