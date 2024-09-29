@@ -6,9 +6,17 @@ export function toMoxfieldTxtExport(props: { deck: Deck }): string {
   function format(boardCards: BoardCard[]) {
     return toSorted(boardCards, (a, b) =>
       a.card.name.localeCompare(b.card.name)
-    ).map(
-      (_) =>
-        `${_.quantity.toString()} ${_.card.name} (${_.card.set.toUpperCase()}) ${_.card.cn} ${_.isFoil ? "*F*" : ""}`
+    ).map((_) =>
+      [
+        _.quantity.toString(),
+        _.card.name,
+        `(${_.card.set.toUpperCase()})`,
+        _.card.cn,
+        _.finish === "etched" ? "*E*" : _.finish === "foil" ? "*F*" : undefined,
+        props.deck.authorTags[_.card.name]?.map((_) => "#" + _).join(" "),
+      ]
+        .filter((_) => _)
+        .join(" ")
     );
   }
   const mainboard = format(Object.values(props.deck.boards.mainboard.cards));

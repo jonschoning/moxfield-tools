@@ -59,13 +59,15 @@ export type Folder = {
   name: string;
 };
 
+export type Tag = string;
+
 export type Deck = {
   affiliates: {
     [key: string]: string;
   };
   allowPrimerClone: boolean;
   areCommentsEnabled: boolean;
-  authorTags: unknown;
+  authorTags: { [cardName: string]: Tag[] | undefined };
   authors: User[];
   authorsCanEdit: boolean;
   boards: {
@@ -152,7 +154,7 @@ export type BoardCard = {
   boardType: BoardType;
   card: Card;
   excludedFromColor: boolean;
-  finish: string;
+  finish: Finish;
   isAlter: boolean;
   isCompanion: boolean;
   isFoil: boolean;
@@ -162,6 +164,8 @@ export type BoardCard = {
   useColorIdentityOverride: boolean;
   useManaCostOverride: boolean;
 };
+
+export type Finish = "nonFoil" | "foil" | "etched";
 
 export type BoardType =
   | "attractions"
