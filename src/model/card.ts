@@ -47,7 +47,9 @@ export type Card = {
   oracle_text: string;
   power?: string;
   prices: {
-    usd: number;
+    usd?: number;
+    usd_foil?: number;
+    usd_etched?: number;
     eur: number;
     ck: number;
     lastUpdatedAtUtc: string;

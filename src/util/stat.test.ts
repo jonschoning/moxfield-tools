@@ -1,8 +1,7 @@
 import { promises as fs } from "fs";
 
-import { CardType } from "../model";
 import { readDecks } from "../store";
-import { allCards, mainBoardCards } from "./deck";
+import { allCards, isLand, mainboardCards } from "./deck";
 import { hyp } from "./stat";
 
 let storePath = ".store";
@@ -36,12 +35,9 @@ describe("stat tests", () => {
   it.skip("hyp lands", async () => {
     const decks = await readDecks({ user_name: "test", storePath });
     const deck = decks[5];
-    const maincards = mainBoardCards(deck);
+    const maincards = mainboardCards(deck);
     const landQty = maincards.reduce((xs, { quantity, card }) => {
-      const predicate =
-        (card.type == CardType.Land ||
-          (card.layout == "modal_dfc" && card.type_line.includes("Land"))) &&
-        !(card.name == "Maze of Ith");
+      const predicate = isLand(card) && !(card.name == "Maze of Ith");
       return xs + (predicate ? quantity : 0);
     }, 0);
     console.log(deck.name);

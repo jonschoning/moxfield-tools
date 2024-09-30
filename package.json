@@ -18,7 +18,8 @@
     "test": "vitest run --passWithNoTests",
     "watch": "rollup -c --watch",
     "saveDecks": "node ./scripts/saveDecks.mjs",
-    "savePublicDeck": "node ./scripts/savePublicDeck.mjs"
+    "savePublicDeck": "node ./scripts/savePublicDeck.mjs",
+    "exportDecks": "node ./scripts/exportDecks.mjs"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^5.1.0",
@@ -28,6 +29,7 @@
     "@rollup/plugin-url": "^8.0.2",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.5.4",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -73,6 +75,7 @@
   "dependencies": {
     "@stdlib/stats-base-dists-hypergeometric-cdf": "^0.1.1",
     "dotenv": "^16.4.5",
+    "js-yaml": "^4.1.0",
     "ky": "^1.7.2"
   },
   "engines": {

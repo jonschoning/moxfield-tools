@@ -4,6 +4,7 @@ import {
   readDeckList,
   readDecks,
   toCockatriceExport,
+  toFolderStatExport,
   toMoxfieldTxtExport,
   toMtgoTxtExport,
   writeExports,
@@ -47,6 +48,11 @@ describe.skip("store test", () => {
   it("toCockatriceFormat passes", async () => {
     const decks = await readDecks({ user_name: "test", storePath });
     const result = toCockatriceExport({ deck: decks[0] });
+    expect(result.length).toBeGreaterThan(0);
+  });
+  it("toFolderStatExport passes", async () => {
+    const decks = await readDecks({ user_name: "test", storePath });
+    const result = toFolderStatExport(decks.map((deck) => ({ deck })));
     expect(result.length).toBeGreaterThan(0);
   });
 });

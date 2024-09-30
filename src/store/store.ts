@@ -4,6 +4,7 @@ import path from "path";
 import type { Deck, DeckList } from "../model";
 import {
   toCockatriceExport,
+  toFolderStatExport,
   toMoxfieldTxtExport,
   toMtgoTxtExport,
 } from "./export";
@@ -89,7 +90,11 @@ export async function writeDecks(props: {
   return;
 }
 
-export type ExportType = "moxfield" | "mtgo" | "cockatrice";
+export type DeckExportType =
+  | "moxfield"
+  | "mtgo"
+  | "cockatrice" /*| "deckstat"*/;
+export type ExportType = "folderstat" | DeckExportType;
 
 /** writeExports  */
 export async function writeExports(props: {
@@ -98,32 +103,65 @@ export async function writeExports(props: {
   exports?: ExportType[];
 }): Promise<void> {
   async function write({
-    fn,
+    content,
+    folder,
+    filename,
     ext,
-    deck,
   }: {
-    fn: (props: { deck: Deck }) => string;
+    content: string;
+    folder?: string;
+    filename: string;
     ext: string;
-    deck: { deck: Deck; folder?: string };
   }) {
     const user_name = props.decks[0].deck.createdByUser.userName;
     const filePath = await getFilepath({
       storePath: props.storePath,
-      folders: [user_name, "exports", deck.folder ?? ""],
-      filename: deck.deck.name,
+      folders: [user_name, "exports", folder ?? ""],
+      filename,
       ext,
     });
-    await fs.writeFile(filePath, fn({ deck: deck.deck }), { encoding: "utf8" });
+    await fs.writeFile(filePath, content, { encoding: "utf8" });
     console.log(`wrote ${filePath}`);
   }
 
   for (const deck of props.decks) {
     if (!props.exports || props.exports.includes("moxfield"))
-      await write({ fn: toMoxfieldTxtExport, ext: "txt", deck });
+      await write({
+        content: toMoxfieldTxtExport(deck),
+        folder: deck.folder,
+        filename: deck.deck.name,
+        ext: "txt",
+      });
     if (!props.exports || props.exports.includes("mtgo"))
-      await write({ fn: toMtgoTxtExport, ext: "mtgo.txt", deck });
+      await write({
+        content: toMtgoTxtExport(deck),
+        folder: deck.folder,
+        filename: deck.deck.name,
+        ext: "mtgo.txt",
+      });
     if (!props.exports || props.exports.includes("cockatrice"))
-      await write({ fn: toCockatriceExport, ext: "cod", deck });
+      await write({
+        content: toCockatriceExport(deck),
+        folder: deck.folder,
+        filename: deck.deck.name,
+        ext: "cod",
+      });
+    // if (!props.exports || props.exports.includes("deckstat"))
+    //   await write({
+    //     content: toDeckStatExport(deck),
+    //     folder: deck.folder,
+    //     filename: deck.deck.name,
+    //     ext: "stat.txt",
+    //   });
+  }
+
+  if (props.exports?.includes("folderstat")) {
+    await write({
+      content: toFolderStatExport({ decks: props.decks, types: true }),
+      folder: props.decks[0].folder,
+      filename: "_folder",
+      ext: "stat.yaml",
+    });
   }
 
   return;

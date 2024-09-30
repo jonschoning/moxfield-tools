@@ -1,5 +1,17 @@
-import type { BoardCard, Deck } from "../model";
-import { normalize, toSorted } from "../util";
+import { dump as yaml_dump } from "js-yaml";
+
+import { type BoardCard, type Deck } from "../model";
+import {
+  cmcAvg,
+  cmcDistribution,
+  cmcDistributionG,
+  deckValueUsd,
+  mainboardCount,
+  normalize,
+  toFixedFloat,
+  toSorted,
+  typeDistribution,
+} from "../util";
 
 /** toMoxfieldTxtFormat */
 export function toMoxfieldTxtExport(props: { deck: Deck }): string {
@@ -77,3 +89,51 @@ export function toCockatriceExport(props: { deck: Deck }): string {
 
   return cod;
 }
+
+type FolderStat = {
+  totalUsd: number;
+  exportedAtUtc: string;
+  decks: { [name: string]: DeckStat };
+};
+type DeckStat = {
+  totalUsd: number;
+  main: number;
+  cmcAvg: number;
+  cmcDist: Record<number, number>;
+  cmcDistG: Record<number, string>;
+  type?: Record<string, number>;
+};
+
+export function toFolderStatExport({
+  decks,
+  types = true,
+}: {
+  decks: { deck: Deck }[];
+  types?: boolean;
+}): string {
+  const deckStat: FolderStat["decks"] = decks.reduce((acc, deck) => {
+    const cmcDist = cmcDistribution(deck.deck);
+    return {
+      ...acc,
+      [deck.deck.name]: {
+        main: mainboardCount(deck.deck),
+        ...(types ? { type: typeDistribution(deck.deck, true) } : {}),
+        cmcAvg: cmcAvg(deck.deck),
+        cmcDist,
+        cmcDistG: cmcDistributionG(cmcDist),
+        totalUsd: toFixedFloat(deckValueUsd(deck.deck)),
+      } satisfies DeckStat,
+    };
+  }, {});
+  return yaml_dump({
+    exportedAtUtc: new Date().toISOString(),
+    totalUsd: toFixedFloat(
+      Object.values(deckStat).reduce((acc, deck) => acc + deck.totalUsd, 0)
+    ),
+    decks: deckStat,
+  } satisfies FolderStat);
+}
+// export function toDeckStatExport(_props: { deck: Deck }): string {
+//   // const mainboard = format(Object.values(props.deck.boards.mainboard.cards));
+//   return "";
+// }
