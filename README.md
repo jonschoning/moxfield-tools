@@ -25,8 +25,12 @@ f) Run Command Scripts
 
 ## Command Scripts
 
-- `npm run saveDecks`: Download the decks in your root folder into `.store`
+- `npm run saveDecks`: Downloads the decks in your root moxfield folder into `.store/<userId>` u
 
-- `npm run saveDecks -- MYFOLDER`: Download the decks in folder `MYFOLDER` into `.store`
+- `npm run saveDecks -- MYFOLDER`: Download the decks in moxfield folder `MYFOLDER` into `.store/<userId>/MYFOLDER`
 
-- `npm run savePublicDeck -- PUBLICID`: Download the deck with publicid `PUBLICID` into `.store`
+- `npm run savePublicDeck -- PUBLICID`: Download the deck with publicid `PUBLICID` into `.store/<userId>`
+
+- `npm run exportDecks -- userId`: write exports for `.store/<userId>` decks into `.store/<userId>/exports`
+
+- `npm run exportDecks -- userId MYFOLDER`: as above, but for folder `.store/<userId>/MYFOLDER`
