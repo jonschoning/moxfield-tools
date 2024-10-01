@@ -31,6 +31,6 @@ f) Run Command Scripts
 
 - `npm run savePublicDeck -- PUBLICID`: Download the deck with publicid `PUBLICID` into `.store/<userId>`
 
-- `npm run exportDecks -- userId`: write exports for `.store/<userId>` decks into `.store/<userId>/exports`
+- `npm run exportDecks -- <userId>`: write exports for store folder `.store/<userId>` decks into `.store/<userId>/exports`
 
-- `npm run exportDecks -- userId MYFOLDER`: as above, but for folder `.store/<userId>/MYFOLDER`
+- `npm run exportDecks -- <userId> MYFOLDER`: as above, but for store folder `.store/<userId>/MYFOLDER`

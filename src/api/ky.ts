@@ -1,8 +1,5 @@
-import dotenv from "dotenv";
 import ky from "ky";
 
-// Load the variables from the .env file into process.env
-dotenv.config();
 
 export function getMoxfieldKy(require_access_token = true) {
   const moxfield_access_token = process.env.MOXFIELD_ACCESS_TOKEN;
