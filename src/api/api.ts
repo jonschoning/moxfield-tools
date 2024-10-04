@@ -1,7 +1,6 @@
 import type { Deck, DeckList } from "../model";
 import { getMoxfieldKy } from "./ky";
 
-const RATE_LIMIT_INTERVAL = 750;
 
 const uris = {
   decks: "https://api2.moxfield.com/v3/decks",
@@ -54,7 +53,7 @@ export async function getDecksByFolder({
     const deck = await getDeck(_.publicId);
     decks.push(deck);
     if (callback) await callback({ deck, folder });
-    await new Promise((resolve) => setTimeout(resolve, RATE_LIMIT_INTERVAL));
+    // await new Promise((resolve) => setTimeout(resolve, RATE_LIMIT_INTERVAL));
   }
   return decks;
 }
