@@ -11,9 +11,9 @@ tools for downloading, saving, and exporting decks from moxfield
 5. Copy the `.env.template` file in this folder to a new file: `.env`
 6. Set the value of the `MOXFIELD_ACCESS_TOKEN` with the method below:
 
-a). While logged into moxfield, refresh with Chrome DevTools open and filter the `Network` tab for `refresh`. One row should appear.
+a). While logged into moxfield, refresh with Chrome DevTools open and type `authenticated` into the filter on the `Network` tab. One row should appear.
 
-b) Click the `refresh` row & right-click the `access_token` property.
+b) Go to the Preview tab of the `authenticated` request & right-click the `refresh` -> `access_token` property.
 
 c) Select `Copy value` from the popup menu
 

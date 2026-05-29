@@ -1,5 +1,5 @@
 import type { Deck, DeckList } from "../model";
-import { getMoxfieldKy } from "./ky";
+import { getMoxfieldGot } from "./got";
 
 
 const uris = {
@@ -9,8 +9,8 @@ const uris = {
 
 /** get decklist */
 export async function getDecklist(): Promise<DeckList> {
-  const ky = getMoxfieldKy();
-  return await ky.get<DeckList>(uris.decks).json();
+  const g = getMoxfieldGot();
+  return await g.get(uris.decks).json<DeckList>();
 }
 
 /** get deck by publicid */
@@ -18,8 +18,8 @@ export async function getDeck(
   publicId: string,
   require_access_token = true
 ): Promise<Deck> {
-  const ky = getMoxfieldKy(require_access_token);
-  return await ky.get<Deck>(uris.deck.replace("%PUBLICID%", publicId)).json();
+  const g = getMoxfieldGot(require_access_token);
+  return await g.get(uris.deck.replace("%PUBLICID%", publicId)).json<Deck>();
 }
 
 /** get deck by deck name */

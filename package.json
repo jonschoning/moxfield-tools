@@ -75,8 +75,8 @@
   "dependencies": {
     "@stdlib/stats-base-dists-hypergeometric-cdf": "^0.1.1",
     "dotenv": "^16.4.5",
-    "js-yaml": "^4.1.0",
-    "ky": "^1.7.2"
+    "got": "^15.0.5",
+    "js-yaml": "^4.1.0"
   },
   "engines": {
     "node": ">=18"
