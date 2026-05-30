@@ -17,9 +17,10 @@
     "lint:fix": "tsc --noEmit && eslint . --fix",
     "test": "vitest run --passWithNoTests",
     "watch": "rollup -c --watch",
-    "saveDecks": "node ./scripts/saveDecks.mjs",
-    "savePublicDeck": "node ./scripts/savePublicDeck.mjs",
-    "exportDecks": "node ./scripts/exportDecks.mjs"
+    "main": "tsx src/main.ts",
+    "saveDecks": "tsx src/main.ts saveDecks",
+    "savePublicDeck": "tsx src/main.ts savePublicDeck",
+    "exportDecks": "tsx src/main.ts exportDecks"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^5.1.0",
@@ -69,6 +70,7 @@
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-tsconfig-paths": "^1.5.2",
     "shx": "^0.3.4",
+    "tsx": "^4.22.3",
     "typescript": "^5.5.4",
     "vitest": "^2.0.4"
   },

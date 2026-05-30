@@ -93,7 +93,7 @@ export async function writeDecks(props: {
 export type DeckExportType =
   | "moxfield"
   | "mtgo"
-  | "cockatrice" /*| "deckstat"*/;
+  | "cockatrice";
 export type ExportType = "folderstat" | DeckExportType;
 
 /** writeExports  */

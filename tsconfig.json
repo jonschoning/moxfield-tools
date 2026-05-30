@@ -29,8 +29,7 @@
     "strict": true,
     "target": "esnext",
     "types": ["@testing-library/jest-dom", "vite/client", "vitest/globals"],
-    "verbatimModuleSyntax": true,
-    "baseUrl": "."
+    "verbatimModuleSyntax": true
   },
 
   "include": ["src/*", "src/**/*", "test/*", "test/**/*"],

@@ -91,7 +91,7 @@ export async function exportDecks(props: {
   user_name: string;
   folder?: string;
   /** write all exports if true, or named exports if array. */
-  exports?: DeckExportType[];
+  exports?: boolean | DeckExportType[];
 }): Promise<void> {
   try {
     const decks = await readDecks({
