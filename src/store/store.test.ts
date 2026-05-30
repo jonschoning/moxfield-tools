@@ -52,7 +52,9 @@ describe.skip("store test", () => {
   });
   it("toFolderStatExport passes", async () => {
     const decks = await readDecks({ user_name: "test", storePath });
-    const result = toFolderStatExport(decks.map((deck) => ({ deck })));
+    const result = toFolderStatExport({
+      decks: decks.map((deck) => ({ deck })),
+    });
     expect(result.length).toBeGreaterThan(0);
   });
 });

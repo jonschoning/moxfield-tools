@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 
 import { exportDecks, saveDecks, savePublicDeck } from "./commands"
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const [, , command, ...args] = process.argv;
 const STORE_PATH = process.env.STORE_PATH ?? "";

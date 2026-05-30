@@ -13,7 +13,6 @@
   "ignorePatterns": ["node_modules/", "dist/"],
   "parserOptions": {
     "project": "./tsconfig.eslint.json",
-    "tsconfigRootDir": "./",
     "sourceType": "module"
   },
   "plugins": [
