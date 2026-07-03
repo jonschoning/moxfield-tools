@@ -69,7 +69,8 @@ export function toCockatriceExport(props: { deck: Deck }): string {
     return toSorted(boardCards, (a, b) =>
       a.card.name.localeCompare(b.card.name)
     ).map(
-      (_) => `<card number="${_.quantity.toString()}" name="${toName(_)}"/>`
+      (_) =>
+        `<card number="${_.quantity.toString()}" name="${escapeXml(toName(_))}"/>`
     );
   }
   const mainboard = format(Object.values(props.deck.boards.mainboard.cards));
@@ -77,8 +78,8 @@ export function toCockatriceExport(props: { deck: Deck }): string {
 
   const cod = `<?xml version="1.0" encoding="UTF-8"?>
 <cockatrice_deck version="1">
-  <deckname>${props.deck.name}</deckname>
-  <comments>${props.deck.publicUrl}</comments>
+  <deckname>${escapeXml(props.deck.name)}</deckname>
+  <comments>${escapeXml(props.deck.publicUrl)}</comments>
   <zone name="main">
     ${mainboard.join("\n    ")}
   </zone>
@@ -88,6 +89,15 @@ export function toCockatriceExport(props: { deck: Deck }): string {
 </cockatrice_deck>`;
 
   return cod;
+}
+
+function escapeXml(str: string): string {
+  return str
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
 }
 
 type FolderStat = {

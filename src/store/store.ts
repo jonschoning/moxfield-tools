@@ -27,6 +27,7 @@ export async function readDeckList(props: {
     }
   }
 
+  if (deckLists.length === 0) throw new Error(`no decklist found in ${dir}`);
   return deckLists[0];
 }
 
@@ -171,12 +172,27 @@ function toJson(o: object): string {
   return JSON.stringify(o, null, 2);
 }
 
+/** Strips characters that are invalid in filenames (and reserved segments
+ * like ".." that path.join would otherwise interpret as directory traversal)
+ * from a single path segment sourced from external data (e.g. deck/user
+ * names from the Moxfield API). Empty input is passed through unchanged so
+ * optional folder segments (`folder ?? ""`) keep being skipped by path.join. */
+function sanitizePathSegment(segment: string): string {
+  if (segment === "") return "";
+  // eslint-disable-next-line no-control-regex -- intentionally stripping control characters
+  const cleaned = segment.replace(/[\x00-\x1f<>:"/\\|?*]/g, "").trim();
+  return cleaned === "" || cleaned === "." || cleaned === ".." ? "_" : cleaned;
+}
+
 async function getFolderpath(props: {
   storePath: string;
   folders?: string[];
   mkdir?: boolean;
 }) {
-  const dir = path.join(props.storePath, ...(props.folders ?? []));
+  const dir = path.join(
+    props.storePath,
+    ...(props.folders ?? []).map(sanitizePathSegment)
+  );
   if (props.mkdir) await fs.mkdir(dir, { recursive: true });
   return dir;
 }
@@ -192,9 +208,7 @@ async function getFilepath(props: {
     folders: props.folders,
     mkdir: true,
   });
-  const filePath = path.join(
-    dir,
-    `${props.filename.replaceAll(" ", "")}.${props.ext}`
-  );
+  const filename = sanitizePathSegment(props.filename.replaceAll(" ", ""));
+  const filePath = path.join(dir, `${filename}.${props.ext}`);
   return filePath;
 }

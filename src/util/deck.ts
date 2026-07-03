@@ -80,9 +80,11 @@ export function deckValueUsd(deck: Deck): number {
 }
 
 export function cmcAvg(deck: Deck): number {
+  const count = nonlandCount(deck);
+  if (count === 0) return 0;
   return toFixedFloat(
     nonlandCards(deck).reduce((acc, _) => acc + _.quantity * _.card.cmc, 0) /
-      nonlandCount(deck)
+      count
   );
 }
 

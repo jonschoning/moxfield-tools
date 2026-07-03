@@ -7,9 +7,14 @@ if (!user_name) {
   throw new Error("user_name is required");
 }
 
-exportDecks({
-  path: STORE_PATH,
-  user_name,
-  folder: process.argv[3],
-  exports: true,
-});
+try {
+  await exportDecks({
+    path: STORE_PATH,
+    user_name,
+    folder: process.argv[3],
+    exports: true,
+  });
+} catch (e) {
+  console.error(e);
+  process.exitCode = 1;
+}
