@@ -5,29 +5,23 @@
   "type": "module",
   "exports": {
     "types": "./dist/index.d.ts",
-    "import": "./dist/index.js",
-    "require": "./dist/index.cjs"
+    "import": "./dist/index.js"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "shx rm -rf dist && esbuild src/index.ts --bundle --platform=node --format=esm --outfile=dist/index.js --packages=external && tsc -p tsconfig.build.json",
     "lint": "tsc --noEmit && eslint .",
     "lint:fix": "tsc --noEmit && eslint . --fix",
     "test": "vitest run --passWithNoTests",
-    "watch": "rollup -c --watch",
+    "watch": "esbuild src/index.ts --bundle --platform=node --format=esm --outfile=dist/index.js --packages=external --watch",
     "main": "tsx src/main.ts",
     "saveDecks": "tsx src/main.ts saveDecks",
     "savePublicDeck": "tsx src/main.ts savePublicDeck",
     "exportDecks": "tsx src/main.ts exportDecks"
   },
   "devDependencies": {
-    "@rollup/plugin-alias": "^6.0.0",
-    "@rollup/plugin-commonjs": "^29.0.3",
-    "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^16.0.3",
-    "@rollup/plugin-url": "^8.0.2",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
     "@types/js-yaml": "^4.0.9",
@@ -56,19 +50,12 @@
     "eslint-plugin-storybook": "^10.5.5",
     "eslint-plugin-testing-library": "^7.16.2",
     "eslint-plugin-vitest": "^0.5.4",
+    "esbuild": "^0.28.0",
     "globals": "^17.8.0",
     "happy-dom": "^20.11.1",
     "prettier": "^3.9.6",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "rollup": "^4.62.3",
-    "rollup-plugin-copy": "^3.5.0",
-    "rollup-plugin-delete": "^3.0.2",
-    "rollup-plugin-dts": "^6.4.1",
-    "rollup-plugin-esbuild": "^6.2.1",
-    "rollup-plugin-node-externals": "^9.0.1",
-    "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-tsconfig-paths": "^1.5.2",
     "shx": "^0.4.0",
     "tsx": "^4.23.1",
     "typescript": "^6.0.3",
